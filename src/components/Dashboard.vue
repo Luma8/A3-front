@@ -3,13 +3,24 @@
         <Navbar :currentTab="currentTab" :tabs="tabs" @change-tab="currentTab = $event" />
         
         <div class="filters-container">
-            <label for="gender-filter">Filtrar por Gênero:</label>
-            <select id="gender-filter" v-model="selectedGender" @change="fetchData">
-                <option value="">Todos</option>
-                <option value="Homem">Homem</option>
-                <option value="Mulher">Mulher</option>
-                <option value="Não binário">Não binário</option>
-            </select>
+            <div class="filter-group">
+                <label for="gender-filter">Filtrar por Gênero:</label>
+                <select id="gender-filter" v-model="selectedGender" @change="fetchData">
+                    <option value="">Todos</option>
+                    <option value="Homem">Homem</option>
+                    <option value="Mulher">Mulher</option>
+                    <option value="Não binário">Não binário</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="school-filter">Filtrar por Escolaridade:</label>
+                <select id="school-filter" v-model="selectedSchoolYear" @change="fetchData">
+                    <option value="">Todos</option>
+                    <option value="2º ano">2º Ano</option>
+                    <option value="3º ano">3º Ano</option>
+                </select>
+            </div>
         </div>
 
         <div class="dashboard">
@@ -42,12 +53,12 @@
                             <PieChart v-if="genderData" :chartData="genderData" />
                         </div>
                     </div>
-                    <div class="chart-container">
+                    <!-- <div class="chart-container">
                         <h3>Avaliação Geral</h3>
                         <div class="chart-wrapper">
                             <BarChart v-if="generalEvalData" :chartData="generalEvalData" />
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div v-if="currentTab === 'escolaridade'" class="charts-grid">
@@ -217,6 +228,7 @@ const loading = ref(true)
 const error = ref(null)
 const currentTab = ref('geral')
 const selectedGender = ref('')
+const selectedSchoolYear = ref('')
 
 const tabs = [
     { id: 'geral', label: 'Visão Geral' },
@@ -232,9 +244,20 @@ const fetchData = async () => {
     loading.value = true
     try {
         let url = 'https://a3-la3z.onrender.com/estatisticas'
+        const params = []
+        
         if (selectedGender.value) {
-            url += `?genero=${selectedGender.value}`
+            params.push(`genero=${selectedGender.value}`)
         }
+        
+        if (selectedSchoolYear.value) {
+            params.push(`ano_escolar=${selectedSchoolYear.value}`)
+        }
+
+        if (params.length > 0) {
+            url += '?' + params.join('&')
+        }
+
         const response = await axios.get(url)
         stats.value = response.data
     } catch (err) {
@@ -478,10 +501,17 @@ h3 {
     margin-bottom: 20px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
     background: #2a2a2a;
-    padding: 10px 20px;
+    padding: 15px 20px;
     border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .filters-container label {
