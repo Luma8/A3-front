@@ -18,15 +18,23 @@
             <div v-else-if="stats && stats.message" class="no-data">{{ stats.message }}</div>
 
             <div v-else class="content">
-                <!-- Summary Cards -->
                 <div class="summary-cards">
                     <div class="card">
                         <h3>Total de Participantes</h3>
                         <p class="big-number">{{ stats.total_participantes }}</p>
                     </div>
+                    <div class="card">
+                        <h3>Média de Idade</h3>
+                        <p class="big-number">{{ stats.media_idade }}</p>
+                        <p class="small-text">anos</p>
+                    </div>
+                    <div class="card">
+                        <h3>Desvio Padrão</h3>
+                        <p class="big-number">{{ stats.desvio_padrao_idade }}</p>
+                        <p class="small-text">anos</p>
+                    </div>
                 </div>
 
-                <!-- Tab: Geral -->
                 <div v-if="currentTab === 'geral'" class="charts-grid">
                     <div class="chart-container">
                         <h3>Gênero</h3>
@@ -42,7 +50,6 @@
                     </div>
                 </div>
 
-                <!-- Tab: Escolaridade -->
                 <div v-if="currentTab === 'escolaridade'" class="charts-grid">
                     <div class="chart-container">
                         <h3>Ano Escolar</h3>
@@ -52,7 +59,6 @@
                     </div>
                 </div>
 
-                <!-- Tab: Pretensão -->
                 <div v-if="currentTab === 'pretensao'" class="charts-grid">
                     <div class="chart-container">
                         <h3>Universidade Pretendida</h3>
@@ -62,7 +68,6 @@
                     </div>
                 </div>
 
-                <!-- Tab: Matérias -->
                 <div v-if="currentTab === 'materias'" class="charts-grid">
                     <div class="chart-container">
                         <h3>Interesse em Tecnologia</h3>
@@ -96,7 +101,6 @@
                     </div>
                 </div>
 
-                <!-- Tab: Perfil Tecnológico -->
                 <div v-if="currentTab === 'tecnologia'" class="charts-grid">
                     <div class="chart-container">
                         <h3>Turno de Preferência</h3>
@@ -124,7 +128,6 @@
                     </div>
                 </div>
 
-                <!-- Tab: Perfis Específicos -->
                 <div v-if="currentTab === 'perfis'" class="profiles-section">
                     <h2 class="section-title">Foco em Tecnologia</h2>
                     <div class="profiles-grid">
@@ -152,6 +155,44 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Tab: Análise Interpretativa -->
+                <div v-if="currentTab === 'analise'" class="analysis-section">
+                    <div class="analysis-card">
+                        <h2 class="section-title">Análise do Perfil dos Participantes</h2>
+                        <div class="analysis-text">
+                            <p>
+                                A análise dos dados coletados no evento "Vem para o Mundo" revela insights importantes sobre o perfil dos estudantes e seu potencial interesse na área de Computação.
+                            </p>
+                            
+                            <h3>1. Perfil Demográfico e Idade</h3>
+                            <p>
+                                O público é majoritariamente jovem, com uma média de idade de <strong>{{ stats.media_idade }} anos</strong>. 
+                                O desvio padrão de <strong>{{ stats.desvio_padrao_idade }}</strong> indica uma {{ stats.desvio_padrao_idade < 1.5 ? 'baixa' : 'moderada' }} dispersão, 
+                                confirmando que o evento atingiu seu público-alvo principal: alunos do ensino médio em fase de decisão de carreira.
+                            </p>
+
+                            <h3>2. Interesse por Tecnologia</h3>
+                            <p>
+                                Observa-se uma correlação clara entre o gênero e o interesse declarado em tecnologia. 
+                                Os dados da aba "Perfis" mostram que os alunos do gênero masculino tendem a ter um interesse prévio mais consolidado ("Muito Interesse"), 
+                                enquanto há um campo de oportunidade significativo para engajar mais alunas, que muitas vezes aparecem com interesses divididos ou focados em outras áreas.
+                            </p>
+
+                            <h3>3. Preferências Acadêmicas</h3>
+                            <p>
+                                As matérias preferidas (Matemática vs. Português/Humanas) alinham-se fortemente com a escolha do curso. 
+                                Alunos que indicam "Matemática" como favorita são os que mais demonstram interesse imediato em Ciência da Computação.
+                            </p>
+
+                            <h3>4. Conclusão</h3>
+                            <p>
+                                O evento foi eficaz em atrair estudantes com perfil compatível. Para futuras edições, recomenda-se ações específicas para desmistificar a área de exatas para o público feminino 
+                                e demonstrar as aplicações criativas da computação (jogos, design) para atrair alunos com perfil mais artístico/humanas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -176,7 +217,8 @@ const tabs = [
     { id: 'pretensao', label: 'Pretensão' },
     { id: 'materias', label: 'Matérias Escolhidas' },
     { id: 'tecnologia', label: 'Perfil Tecnológico' },
-    { id: 'perfis', label: 'Perfis' }
+    { id: 'perfis', label: 'Perfis' },
+    { id: 'analise', label: 'Análise Interpretativa' }
 ]
 
 const fetchData = async () => {
@@ -493,5 +535,43 @@ h3 {
 .no-profile-data {
     color: #888;
     font-style: italic;
+}
+
+.analysis-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.analysis-card {
+    background: #2a2a2a;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.analysis-text {
+    color: #ddd;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.analysis-text h3 {
+    color: #41B883;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+}
+
+.analysis-text p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.small-text {
+    font-size: 1rem;
+    color: #888;
+    margin-top: -5px;
 }
 </style>
