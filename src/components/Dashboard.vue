@@ -137,6 +137,7 @@
                                 <p><strong>Alunos:</strong> {{ stats.perfis_especificos.tech[key].count }}</p>
                                 <p><strong>Turno:</strong> {{ stats.perfis_especificos.tech[key].top_turno }}</p>
                                 <p><strong>Matéria:</strong> {{ stats.perfis_especificos.tech[key].top_materia }}</p>
+                                <p><strong>Já Programou:</strong> {{ stats.perfis_especificos.tech[key].pct_contato }}%</p>
                             </div>
                             <div v-else class="no-profile-data">Sem dados</div>
                         </div>
@@ -150,6 +151,7 @@
                                 <p><strong>Alunos:</strong> {{ stats.perfis_especificos.humanas[key].count }}</p>
                                 <p><strong>Turno:</strong> {{ stats.perfis_especificos.humanas[key].top_turno }}</p>
                                 <p><strong>Matéria:</strong> {{ stats.perfis_especificos.humanas[key].top_materia }}</p>
+                                <p><strong>Já Programou:</strong> {{ stats.perfis_especificos.humanas[key].pct_contato }}%</p>
                             </div>
                             <div v-else class="no-profile-data">Sem dados</div>
                         </div>
@@ -179,10 +181,15 @@
                                 enquanto há um campo de oportunidade significativo para engajar mais alunas, que muitas vezes aparecem com interesses divididos ou focados em outras áreas.
                             </p>
 
-                            <h3>3. Preferências Acadêmicas</h3>
+                            <h3>3. Preferências Acadêmicas e Interdisciplinaridade</h3>
                             <p>
                                 As matérias preferidas (Matemática vs. Português/Humanas) alinham-se fortemente com a escolha do curso. 
                                 Alunos que indicam "Matemática" como favorita são os que mais demonstram interesse imediato em Ciência da Computação.
+                            </p>
+                            <p>
+                                Um dado curioso é a presença de "História" como matéria favorita em alguns perfis com alto interesse tecnológico. 
+                                Isso é justificado pelo fato de que uma parcela significativa desses alunos já teve contato prático com programação (como evidenciado na métrica "Já Programou" na aba Perfis), 
+                                indicando que eles enxergam a tecnologia como uma ferramenta transversal, capaz de se conectar com áreas de Humanas através de jogos, narrativas digitais e preservação histórica.
                             </p>
 
                             <h3>4. Conclusão</h3>
